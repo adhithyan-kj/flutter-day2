@@ -1,4 +1,4 @@
-# Flutter Chat UI Workshop Project
+# Flutter Chat UI Workshop Project.
 
 A lightweight Flutter chat application built for UI/UX learning, navigation practice, and component-based architecture demonstrations.
 
