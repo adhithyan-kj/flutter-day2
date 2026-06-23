@@ -1,76 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'messages_screen.dart';
+import 'chat_screen.dart'; // Import your chat screen
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  // Updated to hold both the username and their last message
+  final List<Map<String, String>> chatData = const [
+    {'name': 'Alice', 'lastMessage': 'See you tomorrow!'},
+    {'name': 'Bob', 'lastMessage': 'Sent an attachment.'},
+    {'name': 'Charlie', 'lastMessage': 'Haha that is hilarious 😂'},
+    {'name': 'David', 'lastMessage': 'Are we still on for 8?'},
+    {'name': 'Eve', 'lastMessage': 'Loved the new post!'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // INSTAGRAM UI: Pure black background
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
         title: const Text(
-          'Instagram',
+          'Messages',
           style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontStyle: FontStyle.italic, // Mimics Instagram font style natively
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(CupertinoIcons.heart, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(
-              CupertinoIcons.chat_bubble_text,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.edit_square, color: Colors.white),
             onPressed: () {
-              // Navigates to the Instagram DM Screen
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MessagesScreen()),
-              );
+              // Your original functionality
             },
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Your Feed', style: TextStyle(color: Colors.white)),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.white),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.white),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_outlined, color: Colors.white),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.video_library_outlined, color: Colors.white),
-            label: 'Reels',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline, color: Colors.white),
-            label: 'Profile',
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: chatData.length,
+        itemBuilder: (context, index) {
+          final user = chatData[index];
+
+          return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(userName: user['name']!),
+                ),
+              );
+            },
+            leading: CircleAvatar(
+              radius: 28, // INSTAGRAM UI: Slightly larger avatars
+              backgroundColor: Colors.grey[800],
+              child: const Icon(Icons.person, color: Colors.white),
+            ),
+            title: Text(
+              user['name']!,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            // INSTAGRAM UI: Last message preview + time indicator
+            subtitle: Text(
+              '${user['lastMessage']} · 2h',
+              style: const TextStyle(color: Colors.grey),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: const Icon(
+              Icons.camera_alt_outlined,
+              color: Colors.grey,
+            ), // IG style camera icon
+          );
+        },
       ),
     );
   }

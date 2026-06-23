@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
   final String userName;
+
   const ChatScreen({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black, // INSTAGRAM UI: Dark mode
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
@@ -17,27 +18,19 @@ class ChatScreen extends StatelessWidget {
         ),
         title: Row(
           children: [
-            const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=20'),
+            CircleAvatar(
+              radius: 16,
+              backgroundColor: Colors.grey[800],
+              child: const Icon(Icons.person, color: Colors.white, size: 20),
             ),
             const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  userName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-                const Text(
-                  'Active now',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
+            Text(
+              userName,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -56,117 +49,56 @@ class ChatScreen extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: [
-                // Instagram profile intro
-                Column(
-                  children: [
-                    const CircleAvatar(
-                      radius: 45,
-                      backgroundImage: NetworkImage(
-                        'https://i.pravatar.cc/150?img=20',
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      userName,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const Text(
-                      'Instagram',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[900],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'View Profile',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-
-                // Static dummy messages mimicking Instagram gradient layout
-                const MessageBubble(text: 'Hey! How are you?', isMe: false),
-                const MessageBubble(
-                  text: 'I am good, what about you?',
-                  isMe: true,
-                ),
-                const MessageBubble(
-                  text: 'Check out this new UI redesign!',
-                  isMe: true,
-                ),
-                const MessageBubble(
-                  text: 'Looks exactly like Instagram!',
-                  isMe: false,
-                ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              children: const [
+                MessageBubble(text: 'Hello!', isMe: false),
+                MessageBubble(text: 'Hi there! How are you?', isMe: true),
+                MessageBubble(text: 'Doing great, thanks!', isMe: false),
               ],
             ),
           ),
 
-          // Bottom Input Field
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-              vertical: 15.0,
+          // INSTAGRAM UI: Bottom Input Field Styling
+          Container(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              bottom: 20,
+              top: 10,
             ),
+            color: Colors.black,
             child: Row(
               children: [
+                // IG Style blue camera icon
                 Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
-                    color: Color(0xFF3797F0), // Instagram Blue
+                    color: Color(0xFF3797F0),
                     shape: BoxShape.circle,
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 22,
-                    ),
+                  child: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 20,
                   ),
                 ),
-                const SizedBox(width: 8),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.grey[900], // IG dark mode input field
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ), // IG rounded input
                     ),
-                    child: const Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              hintText: 'Message...',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        Icon(Icons.mic, color: Colors.white),
-                        SizedBox(width: 15),
-                        Icon(Icons.photo_outlined, color: Colors.white),
-                        SizedBox(width: 15),
-                        Icon(Icons.sticky_note_2_outlined, color: Colors.white),
-                      ],
+                    child: const TextField(
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Message...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
@@ -179,7 +111,7 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-// Internal widget for generating Instagram-styled Chat Bubbles
+// INSTAGRAM UI: Message Bubble Design
 class MessageBubble extends StatelessWidget {
   final String text;
   final bool isMe;
@@ -194,20 +126,21 @@ class MessageBubble extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          // Instagram uses solid blue for sender, grey for receiver
+          // INSTAGRAM UI: Blue for me, Dark Grey for them
           color: isMe ? const Color(0xFF3797F0) : Colors.grey[900],
           borderRadius: BorderRadius.circular(20).copyWith(
+            // INSTAGRAM UI: The sharp tail corner
             bottomRight: isMe
-                ? const Radius.circular(5)
+                ? const Radius.circular(4)
                 : const Radius.circular(20),
-            bottomLeft: isMe
-                ? const Radius.circular(20)
-                : const Radius.circular(5),
+            bottomLeft: !isMe
+                ? const Radius.circular(4)
+                : const Radius.circular(20),
           ),
         ),
         child: Text(
           text,
-          style: const TextStyle(color: Colors.white, fontSize: 16),
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
     );

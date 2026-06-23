@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
-import 'chat_screen.dart';
+import 'chat_screen.dart'; // Make sure this matches your original import
 
 class MessagesScreen extends StatelessWidget {
   const MessagesScreen({super.key});
 
+  // ---> KEEP YOUR ORIGINAL VARIABLES, LISTS, OR MODELS HERE <---
+  // For example: final List<Message> conversations = ...
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black, // INSTAGRAM UI: Pure black background
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context), // KEEP ORIGINAL ROUTING
         ),
         title: const Row(
           children: [
+            // ---> YOUR ORIGINAL APPBAR TITLE CONTENT <---
             Text(
-              'your_username',
+              'Messages',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
@@ -31,13 +35,15 @@ class MessagesScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit_square, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              // ---> YOUR ORIGINAL FUNCTIONALITY <---
+            },
           ),
         ],
       ),
       body: Column(
         children: [
-          // Search Bar
+          // INSTAGRAM UI: Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
@@ -46,7 +52,7 @@ class MessagesScreen extends StatelessWidget {
             child: Container(
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.grey[900],
+                color: Colors.grey[900], // Dark mode search field
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const TextField(
@@ -62,84 +68,7 @@ class MessagesScreen extends StatelessWidget {
             ),
           ),
 
-          // Notes & Active Users Horizontal List
-          SizedBox(
-            height: 110,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0,
-                    vertical: 8.0,
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 35,
-                            backgroundImage: NetworkImage(
-                              'https://i.pravatar.cc/150?img=${index + 10}',
-                            ),
-                          ),
-                          if (index == 0) // Note Bubble for current user
-                            Positioned(
-                              top: -5,
-                              right: -5,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[800],
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const Text(
-                                  'Note...',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              width: 18,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 3,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        index == 0 ? 'Your note' : 'User $index',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Tab Header (Messages & Requests)
+          // INSTAGRAM UI: Tab Header (Messages & Requests)
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
@@ -164,35 +93,48 @@ class MessagesScreen extends StatelessWidget {
             ),
           ),
 
-          // Direct Messages Vertical List
+          // INSTAGRAM UI: Vertical List of Messages
           Expanded(
             child: ListView.builder(
-              itemCount: 15,
+              // ---> KEEP YOUR ORIGINAL itemCount HERE <---
+              itemCount:
+                  5, // Replace '5' with your original list length (e.g., conversations.length)
               itemBuilder: (context, index) {
+                // ---> YOU CAN DEFINE YOUR ORIGINAL LIST ITEM VARIABLES HERE <---
+                // final item = conversations[index];
+
                 return ListTile(
                   onTap: () {
+                    // ---> KEEP YOUR ORIGINAL NAVIGATION LOGIC HERE <---
+                    /* Example:
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ChatScreen(userName: 'User $index'),
+                        builder: (context) => ChatScreen(userName: item.name),
                       ),
                     );
+                    */
                   },
                   leading: CircleAvatar(
-                    radius: 26,
-                    backgroundImage: NetworkImage(
-                      'https://i.pravatar.cc/150?img=${index + 20}',
+                    radius: 28, // INSTAGRAM UI: Avatar size
+                    backgroundColor: Colors.grey[800],
+                    // ---> KEEP YOUR ORIGINAL AVATAR IMAGE/ICON HERE <---
+                    child: const Icon(Icons.person, color: Colors.white),
+                  ),
+                  title: const Text(
+                    // ---> KEEP YOUR ORIGINAL TITLE/NAME HERE <---
+                    'User Name',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  title: Text(
-                    'User $index',
-                    style: const TextStyle(color: Colors.white),
+                  subtitle: const Text(
+                    // ---> KEEP YOUR ORIGINAL SUBTITLE/PREVIEW HERE <---
+                    'Tap to view message',
+                    style: TextStyle(color: Colors.grey),
                   ),
-                  subtitle: Text(
-                    'Active ${index + 1}h ago',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
+                  // INSTAGRAM UI: trailing camera icon next to chats
                   trailing: const Icon(
                     Icons.camera_alt_outlined,
                     color: Colors.grey,
