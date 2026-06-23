@@ -1,82 +1,76 @@
-// screens/home_screen.dart
-// This is the FIRST screen users see when the app launches.
-//
-// WHAT IT CONTAINS:
-//   • An AppBar with the app title
-//   • A welcome message
-//   • A button that navigates to the Messages Screen
-
 import 'package:flutter/material.dart';
-import 'messages_screen.dart'; // Import the next screen for navigation
+import 'package:flutter/cupertino.dart';
+import 'messages_screen.dart';
 
-// HomeScreen is a StatelessWidget because it has no changing state –
-// it always looks the same every time it is built.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold provides the basic visual structure: AppBar + body area.
     return Scaffold(
-      // ── AppBar ─────────────────────────────────────────────────────────────
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Flutter Chat App'),
-      ),
-
-      // ── Body ───────────────────────────────────────────────────────────────
-      // Center aligns its child widget both horizontally and vertically.
-      body: Center(
-        // Column stacks widgets vertically.
-        child: Column(
-          // mainAxisAlignment controls how children are spaced along the vertical axis.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // ── Welcome icon ───────────────────────────────────────────────
-            const Icon(
-              Icons.chat_bubble_outline,
-              size: 80,
-              color: Colors.blueGrey,
-            ),
-
-            const SizedBox(height: 24), // Empty space between widgets
-
-            // ── Welcome text ───────────────────────────────────────────────
-            const Text(
-              'Welcome to Flutter Chat!',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            const Text(
-              'Tap the button below to see your messages.',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
-
-            const SizedBox(height: 40),
-
-            // ── Navigation button ──────────────────────────────────────────
-            ElevatedButton(
-              onPressed: () {
-                // NAVIGATION: Navigator.push() opens a new screen.
-                // Think of it like stacking screens on top of each other.
-                // The user presses the back button to return to this screen.
-                Navigator.push(
-                  context,
-                  // MaterialPageRoute wraps the new screen with a slide animation.
-                  MaterialPageRoute(
-                    builder: (context) => const MessagesScreen(),
-                  ),
-                );
-              },
-              child: const Text('Open Messages'),
-            ),
-          ],
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          'Instagram',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontStyle: FontStyle.italic, // Mimics Instagram font style natively
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(CupertinoIcons.heart, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(
+              CupertinoIcons.chat_bubble_text,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // Navigates to the Instagram DM Screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MessagesScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: const Center(
+        child: Text('Your Feed', style: TextStyle(color: Colors.white)),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.white),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search, color: Colors.white),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_outlined, color: Colors.white),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.video_library_outlined, color: Colors.white),
+            label: 'Reels',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline, color: Colors.white),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

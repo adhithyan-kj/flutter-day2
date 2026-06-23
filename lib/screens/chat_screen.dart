@@ -1,140 +1,214 @@
-// screens/chat_screen.dart
-// This is the THIRD screen – a simple chat conversation view.
-//
-// WHAT IT CONTAINS:
-//   • An AppBar showing the contact's name
-//   • A scrollable list of static chat messages
-//   • Messages from "me" appear on the RIGHT in blue
-//   • Messages from the other person appear on the LEFT in grey
-//   • A text input field + Send button at the bottom (no functionality)
-
 import 'package:flutter/material.dart';
-import '../models/message.dart'; // ChatMessage model + sample data
 
-// ChatScreen receives the contact name from the Messages Screen via its constructor.
-// This is how Flutter passes data between screens.
 class ChatScreen extends StatelessWidget {
-  final String contactName; // The name shown in the AppBar
-
-  const ChatScreen({super.key, required this.contactName});
+  final String userName;
+  const ChatScreen({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ── AppBar ─────────────────────────────────────────────────────────────
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        // Display the contact's name passed in from the previous screen
-        title: Text(contactName),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Row(
+          children: [
+            const CircleAvatar(
+              radius: 18,
+              backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=20'),
+            ),
+            const SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                const Text(
+                  'Active now',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.phone, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.videocam_outlined, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
       ),
-
-      // ── Body ───────────────────────────────────────────────────────────────
-      // Column splits the screen into two parts:
-      //   1. The message list (takes all remaining space)
-      //   2. The input bar at the bottom (fixed height)
       body: Column(
         children: [
-          // ── Message List ─────────────────────────────────────────────────
-          // Expanded makes this widget fill all available vertical space
-          // so the input bar stays pinned to the bottom.
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: sampleChatMessages.length,
-              itemBuilder: (context, index) {
-                final message = sampleChatMessages[index];
-                // Build one chat bubble per message
-                return _buildMessageBubble(message);
-              },
-            ),
-          ),
-
-          // ── Input Bar ────────────────────────────────────────────────────
-          _buildInputBar(),
-        ],
-      ),
-    );
-  }
-
-  // ─── Helper: Chat Bubble ──────────────────────────────────────────────────
-  // Builds a single chat bubble widget.
-  // Private methods start with _ by convention (they're only used inside this file).
-  Widget _buildMessageBubble(ChatMessage message) {
-    // Align right if sent by me, left if sent by the other person
-    final alignment =
-        message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-
-    // Blue for "me", grey for the other person
-    final bubbleColor = message.isSentByMe ? Colors.blue[100] : Colors.grey[200];
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        // crossAxisAlignment controls horizontal alignment inside the Column
-        crossAxisAlignment: alignment,
-        children: [
-          // The bubble itself is a simple Container with rounded corners
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            // Limit bubble width so long messages don't span the full screen
-            constraints: const BoxConstraints(maxWidth: 280),
-            decoration: BoxDecoration(
-              color: bubbleColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              message.text,
-              style: const TextStyle(fontSize: 15),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ─── Helper: Input Bar ────────────────────────────────────────────────────
-  // Builds the message input area at the bottom of the screen.
-  // The Send button has no functionality – students can add it later!
-  Widget _buildInputBar() {
-    return Container(
-      // A light border on top to visually separate the input from messages
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      child: Row(
-        children: [
-          // ── Text Field ──────────────────────────────────────────────────
-          // Expanded makes the TextField fill the remaining width
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Type a message…',
-                // OutlineInputBorder adds a visible border around the field
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
+            child: ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [
+                // Instagram profile intro
+                Column(
+                  children: [
+                    const CircleAvatar(
+                      radius: 45,
+                      backgroundImage: NetworkImage(
+                        'https://i.pravatar.cc/150?img=20',
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      userName,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Text(
+                      'Instagram',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[900],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'View Profile',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
                 ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              ),
+
+                // Static dummy messages mimicking Instagram gradient layout
+                const MessageBubble(text: 'Hey! How are you?', isMe: false),
+                const MessageBubble(
+                  text: 'I am good, what about you?',
+                  isMe: true,
+                ),
+                const MessageBubble(
+                  text: 'Check out this new UI redesign!',
+                  isMe: true,
+                ),
+                const MessageBubble(
+                  text: 'Looks exactly like Instagram!',
+                  isMe: false,
+                ),
+              ],
             ),
           ),
 
-          const SizedBox(width: 8), // Space between field and button
-
-          // ── Send Button ─────────────────────────────────────────────────
-          // IconButton wraps an icon and makes it tappable.
-          // onPressed is empty (no functionality) – a student assignment!
-          IconButton(
-            icon: const Icon(Icons.send),
-            color: Colors.blue,
-            onPressed: () {
-              // TODO: Students – add send functionality here!
-              // Hint: You'll need to convert this to a StatefulWidget
-              // and manage a TextEditingController.
-            },
+          // Bottom Input Field
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 15.0,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF3797F0), // Instagram Blue
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: const Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              hintText: 'Message...',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Icon(Icons.mic, color: Colors.white),
+                        SizedBox(width: 15),
+                        Icon(Icons.photo_outlined, color: Colors.white),
+                        SizedBox(width: 15),
+                        Icon(Icons.sticky_note_2_outlined, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Internal widget for generating Instagram-styled Chat Bubbles
+class MessageBubble extends StatelessWidget {
+  final String text;
+  final bool isMe;
+
+  const MessageBubble({super.key, required this.text, required this.isMe});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          // Instagram uses solid blue for sender, grey for receiver
+          color: isMe ? const Color(0xFF3797F0) : Colors.grey[900],
+          borderRadius: BorderRadius.circular(20).copyWith(
+            bottomRight: isMe
+                ? const Radius.circular(5)
+                : const Radius.circular(20),
+            bottomLeft: isMe
+                ? const Radius.circular(20)
+                : const Radius.circular(5),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
       ),
     );
   }
